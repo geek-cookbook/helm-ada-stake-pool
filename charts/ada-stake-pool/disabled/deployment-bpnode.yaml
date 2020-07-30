@@ -111,11 +111,13 @@ spec:
             - name: NODE_NAME
               value: bpnode
             - name: NODE_TOPOLOGY
-              value: "relaynode:3000/1"
+              value: "relaynode.{{ .Release.Namespace }}.svc.cluster.local:3000/1"
             - name: CREATE_STAKEPOOL
               value: "True"         
             - name: METADATA_URL
               value: https://gist.github.com/funkypenguin/42bb71557a84b79c8ed04ba7c65adf09     
+            - name: HOST_ADDR
+              value: '0.0.0.0'
  #         pullPolicy: always
           args: 
             # - "--staking"

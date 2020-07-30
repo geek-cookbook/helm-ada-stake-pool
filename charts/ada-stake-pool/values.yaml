@@ -41,18 +41,29 @@ service:
     http: ""
   port: 3000
   type: ClusterIP
-virtualService:
-  enabled: false
-  hosts:
-  - name: ghost.local
-    path: /
-    tls: false
-    tlsSecret: ghost.local-tls
-secret:
-  bar: hello
-persistence:
-  existingClaim: ada-stake-pool-ada-stake-pool
-  size: 10Gi
+
+producer:
+  replicas: 1
+  persistence:
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: 0.1
+      memory: 2Gi
+
+relay:
+  replicas: 2
+  persistence:
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: 0.1
+      memory: 2Gi
+              
 monitoring:
   pod:
     scrape: false
