@@ -1,0 +1,63 @@
+affinity: {}
+deployment:
+  replicas: 1
+image:
+  pullPolicy: IfNotPresent
+  registry: docker.io
+  repository: funkypenguin/cardano-node-docker
+  tag: latest
+livenessProbe:
+  enabled: true
+  failureThreshold: 6
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 5
+nodeSelector: {}
+podAnnotations: {}
+readinessProbe:
+  enabled: true
+  failureThreshold: 6
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  successThreshold: 1
+  timeoutSeconds: 3
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+securityContext:
+  enabled: true
+  fsGroup: 65534
+  fsUser: 65534
+  runAsUser: 65534
+  runAsGroup: 65534
+service:
+  annotations: {}
+  externalTrafficPolicy: Cluster
+  extraPorts: []
+  loadBalancerIP: null
+  nodePorts:
+    http: ""
+  port: 80
+  type: LoadBalancer
+virtualService:
+  enabled: false
+  hosts:
+  - name: ghost.local
+    path: /
+    tls: false
+    tlsSecret: ghost.local-tls
+secret:
+  bar: hello
+persistence:
+  existingClaim: false
+  size: 10Gi
+monitoring:
+  pod:
+    scrape: false
+pod:
+  bpnode:
+    securityContext: {}
+  relaynode:
+    securityContext: {}

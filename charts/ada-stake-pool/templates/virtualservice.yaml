@@ -1,0 +1,20 @@
+{{- if .Values.virtualService.enabled }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "ada-stake-pool.fullname" . }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+spec:
+  hosts:
+{{ toYaml .Values.virtualService.hosts | indent 2 }}  
+  gateways:
+{{ toYaml .Values.virtualService.gateways | indent 2 }}  
+  http:
+  - route:
+    - destination:
+        host: {{ include "ada-stake-pool.fullname" . }}
+        port:
+          number: {{ .Values.service.port }}
+    timeout: 30s
+{{- end }}

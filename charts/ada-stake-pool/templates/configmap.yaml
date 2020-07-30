@@ -1,0 +1,15 @@
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  labels:
+    app: {{ template "ada-stake-pool.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: "{{ .Release.Service }}"
+    release: "{{ .Release.Name }}"
+  name: {{ template "ada-stake-pool.fullname" . }}
+data:
+  # example.property.1: hello
+  # example.property.file: |-
+  #   property.1=value-1
+  #   property.2=value-2

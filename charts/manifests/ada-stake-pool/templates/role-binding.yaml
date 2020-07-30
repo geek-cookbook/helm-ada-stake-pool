@@ -1,0 +1,20 @@
+---
+# Source: ada-stake-pool/templates/role-binding.yaml
+# Choose One
+# kind: "ClusterRoleBinding"
+# kind: "RoleBinding"
+metadata:
+  name: RELEASE-NAME-ada-stake-pool
+  labels:
+    app: RELEASE-NAME-ada-stake-pool
+    chart: "ada-stake-pool-0.0.1-pre1"
+    heritage: "Helm"
+    release: "RELEASE-NAME"
+roleRef:
+  apiGroup: "rbac.authorization.k8s.io"
+  kind: "ClusterRole"
+  name: "__ROLE_NAME__"
+subjects:
+  - kind: "ServiceAccount"
+    name: "__SERVICE_ACCOUNT_NAME__"
+    namespace: "default"
