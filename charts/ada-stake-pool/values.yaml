@@ -39,8 +39,8 @@ service:
   loadBalancerIP: null
   nodePorts:
     http: ""
-  port: 80
-  type: LoadBalancer
+  port: 3000
+  type: ClusterIP
 virtualService:
   enabled: false
   hosts:
@@ -51,7 +51,7 @@ virtualService:
 secret:
   bar: hello
 persistence:
-  existingClaim: false
+  existingClaim: ada-stake-pool-ada-stake-pool
   size: 10Gi
 monitoring:
   pod:

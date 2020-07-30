@@ -113,9 +113,13 @@ spec:
             - name: NODE_TOPOLOGY
               value: "relaynode:3000/1"
             - name: CREATE_STAKEPOOL
-              value: "True"              
+              value: "True"         
+            - name: METADATA_URL
+              value: https://gist.github.com/funkypenguin/42bb71557a84b79c8ed04ba7c65adf09     
  #         pullPolicy: always
-          args: [ "--start" ]    
+          args: 
+            # - "--staking"
+            - "--start"    
           # command: [ "/bin/sleep"]
           # args: ["1h"]       
           # command: [ "run" ] 
