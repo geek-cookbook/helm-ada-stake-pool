@@ -3,28 +3,28 @@ kind: Service
 metadata:
   name: relay
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-  {{- if .Values.service.annotations }}
-  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.service.annotations "context" $) | nindent 4 }}
+  {{- if .Values.relay.service.annotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.relay.service.annotations "context" $) | nindent 4 }}
   {{- end }}
 spec:
-  type: {{ .Values.service.type }}
-  {{- if (or (eq .Values.service.type "LoadBalancer") (eq .Values.service.type "NodePort")) }}
-  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
+  type: {{ .Values.relay.service.type }}
+  {{- if (or (eq .Values.relay.service.type "LoadBalancer") (eq .Values.relay.service.type "NodePort")) }}
+  externalTrafficPolicy: {{ .Values.relay.service.externalTrafficPolicy | quote }}
   {{- end }}
-  {{- if eq .Values.service.type "LoadBalancer" }}
-  loadBalancerIP: {{ default "" .Values.service.loadBalancerIP | quote }}
+  {{- if eq .Values.relay.service.type "LoadBalancer" }}
+  loadBalancerIP: {{ default "" .Values.relay.service.loadBalancerIP | quote }}
   {{- end }}
   ports:
     - name: cardano-node
-      port: {{ .Values.service.port }}
+      port: {{ .Values.relay.service.port }}
       targetPort: cardano-node
-      {{- if (and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePorts.http))) }}
-      nodePort: {{ .Values.service.nodePorts.http }}
-      {{- else if eq .Values.service.type "ClusterIP" }}
+      {{- if (and (or (eq .Values.relay.service.type "NodePort") (eq .Values.relay.service.type "LoadBalancer")) (not (empty .Values.relay.service.nodePorts.http))) }}
+      nodePort: {{ .Values.relay.service.nodePorts.http }}
+      {{- else if eq .Values.relay.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
-    {{- if .Values.service.extraPorts }}
-    {{- include "common.tplvalues.render" (dict "value" .Values.service.extraPorts "context" $) | nindent 4 }}
+    {{- if .Values.relay.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.relay.service.extraPorts "context" $) | nindent 4 }}
     {{- end }}
   selector:
     app: {{ template "ada-stake-pool.fullname" . }}

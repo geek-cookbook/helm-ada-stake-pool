@@ -34,16 +34,24 @@ spec:
             - name: NODE_NAME
               value: producer
             - name: NODE_TOPOLOGY
-              value: "relaynode.{{ .Release.Namespace }}.svc.cluster.local:3000/1"
+              value: "relay.{{ .Release.Namespace }}.svc.cluster.local:3000/1"
             - name: CREATE_STAKEPOOL
               value: "True"         
             - name: METADATA_URL
-              value: https://gist.github.com/funkypenguin/42bb71557a84b79c8ed04ba7c65adf09     
+              value: https://git.io/JJ220 # A shortened link to my gist     
             - name: HOST_ADDR
-              value: '0.0.0.0'           
+              value: '0.0.0.0'      
+            - name: PUBLIC_RELAY_IP # This is used to inform registration
+              value: {{ default "" .Values.relay.service.loadBalancerIP | quote }}
+            - name: POOL_PLEDGE
+              value: "1234567890" # 1,200 ADA
+            - name: POOL_COST
+              value: "340000000" # 340 ADA
+            - name: POOL_MARGIN
+              value: "0.031415" # 0.314%
           args: 
             - "--start"
-          # - "--staking"
+            - "--staking"
           resources:
 {{ toYaml .Values.producer.resources | indent 12 }}
           ports:

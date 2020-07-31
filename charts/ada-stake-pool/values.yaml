@@ -32,15 +32,7 @@ securityContext:
   fsUser: 65534
   runAsUser: 65534
   runAsGroup: 65534
-service:
-  annotations: {}
-  externalTrafficPolicy: Cluster
-  extraPorts: []
-  loadBalancerIP: null
-  nodePorts:
-    http: ""
-  port: 3000
-  type: ClusterIP
+
 
 producer:
   replicas: 1
@@ -52,7 +44,16 @@ producer:
     requests:
       cpu: 0.1
       memory: 2Gi
-
+  service:
+    annotations: {}
+    externalTrafficPolicy: Cluster
+    extraPorts: []
+    loadBalancerIP: null
+    nodePorts:
+      http: ""
+    port: 3000
+    type: ClusterIP
+    
 relay:
   replicas: 2
   persistence:
@@ -63,6 +64,16 @@ relay:
     requests:
       cpu: 0.1
       memory: 2Gi
+  service:
+    annotations: {}
+    externalTrafficPolicy: Cluster
+    extraPorts: []
+    loadBalancerIP: null
+    nodePorts:
+      http: ""
+    port: 3000
+    type: LoadBalancer # Note that's only the relayservice which gets publically exposed
+    loadBalancerIP: '159.89.222.0' # You may only be able to identify this _after_ deploying it
               
 monitoring:
   pod:
