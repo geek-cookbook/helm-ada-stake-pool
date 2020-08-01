@@ -49,7 +49,7 @@ spec:
           volumeMounts:
             - name: "data"
               readOnly: false
-              mountPath: "/config/mainnet-relay"
+              mountPath: "/config/main-relay"
           ## There are three types or readiness probes:
           ##
           ## More generally, a liveness probe is used to determine whether the application is "healthy" and should
