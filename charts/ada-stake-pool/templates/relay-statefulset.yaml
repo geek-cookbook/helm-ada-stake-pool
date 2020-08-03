@@ -155,7 +155,20 @@ spec:
           ## The Readiness probe follows exactly the same syntax as the liveness probe, and the examples above can
           ## be reused.
           ##
-          # readinessProbe:
+          readinessProbe:
+            exec:
+              command: [ "/scripts/readiness_probe.sh" ]
+              #
+            initialDelaySeconds: 600 # Seriously, it takes ages to read the blockchain in and start syncing!
+            #
+            # Number of seconds after which the probe times out. Minimum value is 1
+            #
+            timeoutSeconds: 10
+            #
+            # Minimum consecutive failures for the probe to be considered failed after having succeeded.
+            # Minimum value is 1.
+            #
+            failureThreshold: 3          
           ##
           ## __LIVENESS_PROBE__
       ## Whether to restart this pod. Possible values are:
