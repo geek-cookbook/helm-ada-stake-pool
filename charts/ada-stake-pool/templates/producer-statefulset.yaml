@@ -167,7 +167,12 @@ spec:
           ## The Readiness probe follows exactly the same syntax as the liveness probe, and the examples above can
           ## be reused.
           ##
-          # readinessProbe:
+          readinessProbe:
+            exec:
+              command: 
+              - timeout
+              - 5s
+              - /scripts/readiness_probe.sh
           ##
           ## __LIVENESS_PROBE__
       ## Whether to restart this pod. Possible values are:

@@ -39,7 +39,9 @@ spec:
               value: "True"
             - name: HOST_ADDR
               value: '0.0.0.0'              
-          args: [ "--start" ]    
+          args: [ "--start" ]   
+          # command: [ "/bin/sleep" ]
+          # args: [ "1h" ] 
           resources:
 {{ toYaml .Values.relay.resources | indent 12 }}
           ports:
@@ -157,7 +159,10 @@ spec:
           ##
           readinessProbe:
             exec:
-              command: [ "/scripts/readiness_probe.sh" ]
+              command: 
+              - timeout
+              - 5s
+              - /scripts/readiness_probe.sh
               #
             initialDelaySeconds: 600 # Seriously, it takes ages to read the blockchain in and start syncing!
             #
