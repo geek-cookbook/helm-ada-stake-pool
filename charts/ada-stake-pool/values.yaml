@@ -34,6 +34,12 @@ securityContext:
   runAsGroup: 65534
 
 
+pool:
+  metadata: https://ada-staking-pool.funkypenguin.co.nz/assets/pool-metadata.json
+  pledge: "150000000000"  # 150K ADA
+  cost: "340000000"     # 340 ADA
+  margin: "0.031415"    # 0.314%
+
 producer:
   replicas: 1
   persistence:

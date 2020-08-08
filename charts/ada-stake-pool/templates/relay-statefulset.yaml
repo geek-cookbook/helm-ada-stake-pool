@@ -163,25 +163,15 @@ spec:
               - timeout
               - 5s
               - /scripts/readiness_probe.sh
-              #
-            initialDelaySeconds: 600 # Seriously, it takes ages to read the blockchain in and start syncing!
-            #
-            # Number of seconds after which the probe times out. Minimum value is 1
-            #
+            initialDelaySeconds: 60
             timeoutSeconds: 10
-            #
-            # Minimum consecutive failures for the probe to be considered failed after having succeeded.
-            # Minimum value is 1.
-            #
             failureThreshold: 3          
-          ##
-          ## __LIVENESS_PROBE__
-      ## Whether to restart this pod. Possible values are:
-      ## - Always (Sensible Default)
-      ## - OnFailure
-      ## - Never
-      ##
-      ## For more information, see http://kubernetes.io/docs/user-guide/pod-states/#restartpolicy
+          lifecycle:
+            preStop:
+              exec:
+                # Currently this does nothing, but when cardano-node supports it, it _should_ gracefully terminate
+                # so that subsequent startups are faster
+                command: ["/usr/local/bin/cardano-cli","shelley","system","stop"]       
       restartPolicy: "Always"
       securityContext:
         ## Volumes which support ownership management are modified to be owned and writable by the GID specified in
@@ -191,7 +181,7 @@ spec:
         fsGroup: 65534
         ## A list of groups applied to the first process run in each container, in addition to the container’s primary
         ## GID. If unspecified, no groups will be added to any container.
-        # supplementalGroups: [1000]
+        # supplementalGroups: [1000]  
   volumeClaimTemplates:
     - metadata:
         name: data
